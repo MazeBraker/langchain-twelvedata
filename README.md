@@ -10,13 +10,14 @@ historical time series, symbol search, and Relative Strength Index (RSI).
 pip install langchain-twelvedata
 ```
 
-Before the PyPI release, install from a clone:
+## Tools
 
-```bash
-git clone https://github.com/MazeBraker/langchain-twelvedata.git
-cd langchain-twelvedata
-pip install .
-```
+- `twelvedata_quote` — `symbol`
+- `twelvedata_time_series` — `symbol`, `interval`, `outputsize`
+- `twelvedata_symbol_search` — `query` (company name or partial ticker, not `symbol`)
+- `twelvedata_rsi` — `symbol`, `interval`, `time_period`
+
+Each tool returns a JSON string with the Twelve Data response.
 
 ## Quick start
 
@@ -39,12 +40,16 @@ data = json.loads(quote.invoke({"symbol": "AAPL"}))
 print(data["close"])
 ```
 
-Pass the same `tools` list to a LangChain agent or a tool-calling model. Each
-tool returns a JSON string containing the Twelve Data response. For example:
+Pass the same `tools` list to a LangChain agent or a tool-calling model:
 
 ```python
 history = next(tool for tool in tools if tool.name == "twelvedata_time_series")
 print(history.invoke({"symbol": "AAPL", "interval": "1day", "outputsize": 5}))
+```
+
+```python
+search = next(tool for tool in tools if tool.name == "twelvedata_symbol_search")
+print(search.invoke({"query": "Apple"}))
 ```
 
 The API key can also be passed explicitly with
@@ -55,6 +60,8 @@ errors are raised to the caller.
 ## Development
 
 ```bash
+git clone https://github.com/MazeBraker/langchain-twelvedata.git
+cd langchain-twelvedata
 pip install -e '.[test]'
 pytest
 ```
