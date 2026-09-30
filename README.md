@@ -14,8 +14,8 @@ pip install langchain-twelvedata
 
 - `twelvedata_quote` — `symbol`
 - `twelvedata_time_series` — `symbol`, `interval`, `outputsize`
-- `twelvedata_symbol_search` — `query` (company name or partial ticker, not `symbol`)
-- `twelvedata_rsi` — `symbol`, `interval`, `time_period`
+- `twelvedata_symbol_search` — `query` (company name or partial ticker, not `symbol`), `outputsize`
+- `twelvedata_rsi` — `symbol`, `interval`, `time_period`, `outputsize`
 
 Each tool returns a JSON string with the Twelve Data response.
 
